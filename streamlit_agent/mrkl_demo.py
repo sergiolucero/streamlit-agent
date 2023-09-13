@@ -17,11 +17,11 @@ from streamlit_agent.clear_results import with_clear_container
 DB_PATH = (Path(__file__).parent / "Chinook.db").absolute()
 
 SAVED_SESSIONS = {
-    "Quién fue el campeón 2022 del fútbol chileno?",
     "Who is Leo DiCaprio's girlfriend? What is her current age raised to the 0.43 power?": "leo.pickle",
     "What is the full name of the artist who recently released an album called "
     "'The Storm Before the Calm' and are they in the FooBar database? If so, what albums of theirs "
     "are in the FooBar database?": "alanis.pickle",
+    "Quién fue el campeón 2022 del fútbol chileno?": "futbol.pickle",
 }
 
 st.set_page_config(
