@@ -1,5 +1,4 @@
 from pathlib import Path
-
 import streamlit as st
 
 from langchain import SQLDatabase
@@ -17,30 +16,17 @@ from streamlit_agent.clear_results import with_clear_container
 DB_PATH = (Path(__file__).parent / "Chinook.db").absolute()
 
 SAVED_SESSIONS = {
-    "Who is Leo DiCaprio's girlfriend? What is her current age raised to the 0.43 power?": "leo.pickle",
-    "What is the full name of the artist who recently released an album called "
-    "'The Storm Before the Calm' and are they in the FooBar database? If so, what albums of theirs "
-    "are in the FooBar database?": "alanis.pickle",
     "Quién fue el campeón 2022 del fútbol chileno?": "futbol.pickle",
 }
 
 st.set_page_config(
-    page_title="MRKL", page_icon="🦜", layout="wide", initial_sidebar_state="collapsed"
+    page_title="Merkén", page_icon="🦜", layout="wide", initial_sidebar_state="collapsed"
 )
 
-"# 🦜🔗 MRKL"
+"# 🦜🔗 MERKEN"
 
-# Setup credentials in Streamlit
-user_openai_api_key = st.sidebar.text_input(
-    "OpenAI API Key", type="password", help="Set this to run your own custom questions."
-)
-
-if user_openai_api_key:
-    openai_api_key = user_openai_api_key
-    enable_custom = True
-else:
-    openai_api_key = "not_supplied"
-    enable_custom = False
+openai_api_key = st.secrets['OPENAI_API_KEY']
+enable_custom = True
 
 # Tools setup
 llm = OpenAI(temperature=0, openai_api_key=openai_api_key, streaming=True)
@@ -53,16 +39,6 @@ tools = [
         name="Search",
         func=search.run,
         description="useful for when you need to answer questions about current events. You should ask targeted questions",
-    ),
-    Tool(
-        name="Calculator",
-        func=llm_math_chain.run,
-        description="useful for when you need to answer questions about math",
-    ),
-    Tool(
-        name="FooBar DB",
-        func=db_chain.run,
-        description="useful for when you need to answer questions about FooBar. Input should be in the form of a question containing full context",
     ),
 ]
 
