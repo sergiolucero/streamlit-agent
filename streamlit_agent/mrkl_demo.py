@@ -51,15 +51,6 @@ if with_clear_container(submit_clicked):
 
     answer_container = output_container.chat_message("assistant", avatar="🦜")
     st_callback = StreamlitCallbackHandler(answer_container)
-
-    # If we've saved this question, play it back instead of actually running LangChain
-    # (so that we don't exhaust our API calls unnecessarily)
-    if user_input in SAVED_SESSIONS:
-        session_name = SAVED_SESSIONS[user_input]
-        session_path = Path(__file__).parent / "runs" / session_name
-        print(f"Playing saved session: {session_path}")
-        answer = playback_callbacks([st_callback], str(session_path), max_pause_time=2)
-    else:
-        answer = mrkl.run(user_input, callbacks=[st_callback])
+    answer = mrkl.run(user_input, callbacks=[st_callback])
 
     answer_container.write(answer)
